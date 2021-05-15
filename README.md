@@ -1,3 +1,28 @@
+**About**
+
+Python implementation of CIEDE2000 color difference calculation based on this paper: [The CIEDE2000 Color-Difference Formula: Implementation Notes, Supplementary Test Data, and Mathematical Observations](http://www2.ece.rochester.edu/~gsharma/ciede2000/ciede2000noteCRNA.pdf).
+
+More info: http://www2.ece.rochester.edu/~gsharma/ciede2000/
+
+Use this BibTeX to cite:
+```
+@article{Sharma2005TheObservations,
+    title = {{The CIEDE2000 color-difference formula: Implementation notes, supplementary test data, and mathematical observations}},
+    year = {2005},
+    journal = {Color Research {\&} Application},
+    author = {Sharma, Gaurav and Wu, Wencheng and Dalal, Edul N},
+    number = {1},
+    month = {2},
+    pages = {21--30},
+    volume = {30},
+    publisher = {Wiley Subscription Services, Inc., A Wiley Company},
+    url = {http://dx.doi.org/10.1002/col.20070},
+    doi = {10.1002/col.20070},
+    issn = {1520-6378},
+    keywords = {CIE, CIE94, CIEDE2000, CIELAB, CMC, color-difference metrics}
+}
+```
+
 **Install**
 
 `pip install pyciede2000`
