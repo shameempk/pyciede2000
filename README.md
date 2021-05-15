@@ -1,6 +1,8 @@
 **About**
 
-Python implementation of CIEDE2000 color difference calculation based on this paper: [The CIEDE2000 Color-Difference Formula: Implementation Notes, Supplementary Test Data, and Mathematical Observations](http://www2.ece.rochester.edu/~gsharma/ciede2000/ciede2000noteCRNA.pdf).
+Python implementation of CIEDE2000 color difference calculation based on this paper:
+
+[The CIEDE2000 Color-Difference Formula: Implementation Notes, Supplementary Test Data, and Mathematical Observations](http://www2.ece.rochester.edu/~gsharma/ciede2000/ciede2000noteCRNA.pdf).
 
 More info: http://www2.ece.rochester.edu/~gsharma/ciede2000/
 
