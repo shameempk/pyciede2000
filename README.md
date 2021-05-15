@@ -5,7 +5,7 @@ Python implementation of CIEDE2000 color difference calculation based on this pa
 More info: http://www2.ece.rochester.edu/~gsharma/ciede2000/
 
 Use this BibTeX to cite:
-```
+```BibTeX
 @article{Sharma2005TheObservations,
     title = {{The CIEDE2000 color-difference formula: Implementation notes, supplementary test data, and mathematical observations}},
     year = {2005},
