@@ -12,9 +12,11 @@ res = ciede2000((50.0000,2.6772,-79.7751), (50.0000,0.0000,-82.7485))
 print(res)
 ```
 
+`ciede2000` accepts two color values as tuples in _Lab_ representation. Also supports optional keyword parameters for para-metric weighting factor `k_L`, `k_C` and `k_H`.
+
 **Output format**
 
-_ciede2000()_ returns a dict with all significant fields in CIEDE2000 calculation.
+`ciede2000()` returns a dict with all significant fields in CIEDE2000 calculation.
 
 ```python
 res = {
