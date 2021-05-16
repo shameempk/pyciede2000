@@ -39,6 +39,38 @@ This cie_de_2000 implementation is based on the papers:
 from numpy import sqrt, power, average, arctan2, degrees, fabs, radians, exp, sin, cos
 from typing import Dict, Tuple
 
+class InvalidColorValues(Exception):
+    """Exception raised for invalid color values.
+
+    Attributes:
+        _tuple -- input tuple which caused the error
+        message -- explanation of the error
+    """
+
+    def __init__(self, _tuple, message="Tuple not in valid (L*, a*, b*) format"):
+        self._tuple = _tuple
+        self.message = message
+        super().__init__(self.message)
+
+    def __str__(self):
+        return f'{self._tuple} -> {self.message}'
+
+class InvalidLabValues(Exception):
+    """Exception raised for invalid L*a*b* values.
+
+    Attributes:
+        lab -- input lab which caused the error
+        message -- explanation of the error
+    """
+
+    def __init__(self, lab, message="Value not in valid L*a*b* color space. L*: 0..100 a*: -128..127 b*: -128..127"):
+        self.lab = lab
+        self.message = message
+        super().__init__(self.message)
+
+    def __str__(self):
+        return f'{self.lab} -> {self.message}'
+
 def ciede2000(lab1: Tuple, lab2: Tuple, k_L: int = 1, k_C: int = 1, k_H: int = 1) -> Dict[str, float]:
 	"""
 	This function return calculated CIEDE2000 color difference value of two input Lab color space elements. 
@@ -50,7 +82,20 @@ def ciede2000(lab1: Tuple, lab2: Tuple, k_L: int = 1, k_C: int = 1, k_H: int = 1
 		:param k_H: Para-metric  weighting  factor kH.
 		:returns: CIEDE2000 color difference of provided colors.
 	"""
-	
+
+	# Error handling
+	for color in (lab1, lab2):
+		# Check for length of input
+		if(len(color) != 3):
+			raise InvalidColorValues(color)
+		# Make sure L* value is in range 0 to 100
+		if color[0] < 0 or color[0] > 100:
+			raise InvalidLabValues(color[0])
+		# Make sure a* and b* is in range -128 to 127
+		for ab in color[1:]:
+			if ab < -128 or ab > 127:
+				raise InvalidLabValues(ab)
+
 	L_1_star,a_1_star,b_1_star=lab1
 	L_2_star,a_2_star,b_2_star=lab2
 	C_1_star=sqrt(power(a_1_star,2)+power(b_1_star,2))
