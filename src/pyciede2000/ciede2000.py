@@ -36,7 +36,7 @@ This cie_de_2000 implementation is based on the papers:
     
 '''
 
-from numpy import sqrt, power, average, arctan2, degrees, fabs, radians, exp, sin, cos
+from math import sqrt, pow, atan2, degrees, fabs, radians, exp, sin, cos
 from typing import Dict, Tuple
 
 class InvalidColorValues(Exception):
@@ -98,19 +98,19 @@ def ciede2000(lab1: Tuple, lab2: Tuple, k_L: int = 1, k_C: int = 1, k_H: int = 1
 
 	L_1_star,a_1_star,b_1_star=lab1
 	L_2_star,a_2_star,b_2_star=lab2
-	C_1_star=sqrt(power(a_1_star,2)+power(b_1_star,2))
-	C_2_star=sqrt(power(a_2_star,2)+power(b_2_star,2))
-	C_bar_star=average([C_1_star,C_2_star])
+	C_1_star=sqrt(pow(a_1_star,2)+pow(b_1_star,2))
+	C_2_star=sqrt(pow(a_2_star,2)+pow(b_2_star,2))
+	C_bar_star=(C_1_star+C_2_star)/2
 	
-	G=0.5*(1-sqrt(power(C_bar_star,7)/(power(C_bar_star,7)+power(25,7))))
+	G=0.5*(1-sqrt(pow(C_bar_star,7)/(pow(C_bar_star,7)+pow(25,7))))
 	
 	a_1_dash=(1+G)*a_1_star
 	a_2_dash=(1+G)*a_2_star
-	C_1_dash=sqrt(power(a_1_dash,2)+power(b_1_star,2))
-	C_2_dash=sqrt(power(a_2_dash,2)+power(b_2_star,2))
-	h_1_dash=degrees(arctan2(b_1_star,a_1_dash))
+	C_1_dash=sqrt(pow(a_1_dash,2)+pow(b_1_star,2))
+	C_2_dash=sqrt(pow(a_2_dash,2)+pow(b_2_star,2))
+	h_1_dash=degrees(atan2(b_1_star,a_1_dash))
 	h_1_dash += (h_1_dash < 0) * 360
-	h_2_dash=degrees(arctan2(b_2_star,a_2_dash))
+	h_2_dash=degrees(atan2(b_2_star,a_2_dash))
 	h_2_dash += (h_2_dash < 0) * 360
 	
 	delta_L_dash=L_2_star-L_1_star
@@ -127,13 +127,13 @@ def ciede2000(lab1: Tuple, lab2: Tuple, k_L: int = 1, k_C: int = 1, k_H: int = 1
 	
 	delta_H_dash=2*sqrt(C_1_dash*C_2_dash)*sin(radians(delta_h_dash)/2.0)
 	
-	L_bar_dash=average([L_1_star,L_2_star])
-	C_bar_dash=average([C_1_dash,C_2_dash])
+	L_bar_dash=(L_1_star+L_2_star)/2
+	C_bar_dash=(C_1_dash+C_2_dash)/2
 	h_bar_dash=h_1_dash+h_2_dash
 	
 	if(C_1_dash*C_2_dash):
 		if(fabs(h_1_dash-h_2_dash)<=180):
-			h_bar_dash=average([h_1_dash,h_2_dash])
+			h_bar_dash=(h_1_dash+h_2_dash)/2
 		else:
 			if(h_1_dash+h_2_dash)<360:
 				h_bar_dash=(h_1_dash+h_2_dash+360)/2
@@ -143,18 +143,18 @@ def ciede2000(lab1: Tuple, lab2: Tuple, k_L: int = 1, k_C: int = 1, k_H: int = 1
 	T=1-0.17*cos(radians(h_bar_dash-30))+0.24*cos(radians(2*h_bar_dash))\
 	+0.32*cos(radians(3*h_bar_dash+6))-0.20*cos(radians(4*h_bar_dash-63))
 	
-	delta_theta=30 * exp(- power( (h_bar_dash-275) / 25, 2))
+	delta_theta=30 * exp(- pow( (h_bar_dash-275) / 25, 2))
 	
-	R_c=2*sqrt( power(C_bar_dash,7) / (power(C_bar_dash,7)+power(25,7)) )
+	R_c=2*sqrt( pow(C_bar_dash,7) / (pow(C_bar_dash,7)+pow(25,7)) )
 	
-	S_L=1+((0.015*power(L_bar_dash-50,2))/sqrt(20+power(L_bar_dash-50,2)))
+	S_L=1+((0.015*pow(L_bar_dash-50,2))/sqrt(20+pow(L_bar_dash-50,2)))
 	S_C=1+0.045*C_bar_dash
 	S_H=1+0.015*C_bar_dash*T
 	R_T=-R_c * sin(2*radians(delta_theta))
 	
-	delta_E_00 = sqrt(power(delta_L_dash/(k_L*S_L),2)+\
-		power(delta_C_dash/(k_C*S_C),2)+\
-		power(delta_H_dash/(k_H*S_H),2)+\
+	delta_E_00 = sqrt(pow(delta_L_dash/(k_L*S_L),2)+\
+		pow(delta_C_dash/(k_C*S_C),2)+\
+		pow(delta_H_dash/(k_H*S_H),2)+\
 		R_T*(delta_C_dash/(k_C*S_C))*(delta_H_dash/(k_H*S_H))\
 		)
 	res = {
