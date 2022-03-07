@@ -35,9 +35,17 @@ This cie_de_2000 implementation is based on the papers:
 }
     
 """
-
-from math import sqrt, pow, atan2, degrees, fabs, radians, exp, sin, cos
-from typing import Dict, Tuple
+from math import atan2
+from math import cos
+from math import degrees
+from math import exp
+from math import fabs
+from math import pow
+from math import radians
+from math import sin
+from math import sqrt
+from typing import Dict
+from typing import Tuple
 
 
 class InvalidColorValues(Exception):
